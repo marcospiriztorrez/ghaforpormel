@@ -49,7 +49,7 @@ jobs:
       - name: Deploy to Azure Web App
         run: |
           az webapp config container set \
-            --name pormel-api \
+            --name ${{ WEB_APP_FOR_CONTAINERS_NAME }} \
             --resource-group full \
             --docker-custom-image-name pormel.azurecr.io/pormel:action-1.6 \
             --docker-registry-server-url https://pormel.azurecr.io
