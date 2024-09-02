@@ -19,7 +19,7 @@ jobs:
 
       - name: Log in to Azure Container Registry
         run: |
-          docker login ${{ CONTAINER_REGISTRY_URL }} -u pormel -p xJ2/dVoODkqNphVOUjbPwO3NIhvaaElengJUg26xFr+ACRBiFoWk
+          docker login ${{ secrets.CONTAINER_REGISTRY_URL }} -u pormel -p xJ2/dVoODkqNphVOUjbPwO3NIhvaaElengJUg26xFr+ACRBiFoWk
 
       - name: Build Docker image
         run: |
