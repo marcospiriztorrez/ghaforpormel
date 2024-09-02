@@ -23,11 +23,11 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t pormel.azurecr.io/pormel:action-1.5 .
+          docker build -t pormel.azurecr.io/pormel:action-1.6 .
 
       - name: Push Docker image to ACR
         run: |
-          docker push pormel.azurecr.io/pormel:action-1.5
+          docker push pormel.azurecr.io/pormel:action-1.6
 
       - name: Azure Login
         uses: azure/login@v1
@@ -49,11 +49,11 @@ jobs:
       - name: Deploy to Azure Web App
         run: |
           az webapp config container set \
-            --name pormel-docker \
+            --name pormel-api \
             --resource-group full \
-            --docker-custom-image-name pormel.azurecr.io/pormel:action-1.5 \
+            --docker-custom-image-name pormel.azurecr.io/pormel:action-1.6 \
             --docker-registry-server-url https://pormel.azurecr.io
 
       - name: Restart Azure Web App
         run: |
-          az webapp restart --name pormel-docker --resource-group full
+          az webapp restart --name pormel-api --resource-group full
