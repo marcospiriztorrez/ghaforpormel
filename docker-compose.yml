@@ -1,0 +1,22 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      DB_HOST: oracle
+      DB_USER: system
+      DB_PORT: 1521
+      DB_PASS: Passw1rd!
+      DB_NAME: XE
+      PORT: 3001
+      ENV: development
+    restart: unless-stopped
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
