@@ -19,41 +19,28 @@ jobs:
 
       - name: Log in to Azure Container Registry
         run: |
-          docker login ${{ secrets.CONTAINER_REGISTRY_URL }} -u pormel -p xJ2/dVoODkqNphVOUjbPwO3NIhvaaElengJUg26xFr+ACRBiFoWk
-
+          docker login ${{ secrets.CONTAINER_REGISTRY_URL }} -u ${{ secrets.CONTAINER_REGISTRY_NAME }} -p ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
       - name: Build Docker image
         run: |
-          docker build -t pormel.azurecr.io/pormel:action-1.6 .
+          docker build -t ${{ secrets.CONTAINER_REGISTRY_URL }}/${{ secrets.CONTAINER_REGISTRY_NAME }}:${{ github.sha }} .
 
       - name: Push Docker image to ACR
         run: |
-          docker push pormel.azurecr.io/pormel:action-1.6
+          docker push ${{ secrets.CONTAINER_REGISTRY_URL }}/${{ secrets.CONTAINER_REGISTRY_NAME }}:${{ github.sha }}
 
       - name: Azure Login
         uses: azure/login@v1
         with:
-          creds: |
-            {
-              "clientId": "fdfb88be-4122-4773-b3e8-5b2f51ed480d",
-              "clientSecret": "esD8Q~DpQo1-DwDaPPmBJIc5kwBdKbw5eIqYzdkq",
-              "subscriptionId": "47874bfe-e8c3-46c9-b7f9-12a98e7e0554",
-              "tenantId": "aef7b9dd-3bc2-453e-85e2-86c46aaf68ee",
-              "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
-              "resourceManagerEndpointUrl": "https://management.azure.com/",
-              "activeDirectoryGraphResourceId": "https://graph.windows.net/",
-              "sqlManagementEndpointUrl": "https://management.core.windows.net:8443/",
-              "galleryEndpointUrl": "https://gallery.azure.com/",
-              "managementEndpointUrl": "https://management.core.windows.net/"
-            }
+          creds: ${{ secrets.CONTAINER_REGISTRY_CREDENTIALS }}
 
       - name: Deploy to Azure Web App
         run: |
           az webapp config container set \
-            --name pormel-api \
-            --resource-group full \
-            --docker-custom-image-name pormel.azurecr.io/pormel:action-1.6 \
-            --docker-registry-server-url https://pormel.azurecr.io
+            --name ${{ secrets.WEB_APP_FOR_CONTAINERS_NAME }} \
+            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+            --docker-custom-image-name ${{ secrets.CONTAINER_REGISTRY_URL }}/${{ secrets.CONTAINER_REGISTRY_NAME }}:${{ github.sha }} \
+            --docker-registry-server-url https://${{ secrets.CONTAINER_REGISTRY_URL }}
 
       - name: Restart Azure Web App
         run: |
-          az webapp restart --name pormel-api --resource-group full
+          az webapp restart --name ${{ secrets.WEB_APP_FOR_CONTAINERS_NAME }} --resource-group ${{ secrets.RESOURCE_GROUP_NAME }}
