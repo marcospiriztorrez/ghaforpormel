@@ -1,4 +1,4 @@
-name: Deploy-To-Azure
+name: Build and Push Docker Image to AZURE ACR
 run-name: deploy-to-azure
 
 on:
