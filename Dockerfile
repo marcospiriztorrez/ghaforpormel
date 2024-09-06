@@ -1,6 +1,7 @@
 FROM --platform=linux/amd64 node:18 AS deps
 WORKDIR /app
 COPY package.json .
+RUN npm config set //npm.pkg.github.com/:_authToken=${GHA_TOKEN}
 RUN npm install
 
 FROM --platform=linux/amd64 node:18 AS builder
