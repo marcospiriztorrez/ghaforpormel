@@ -37,4 +37,4 @@ jobs:
         
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.AWS_ECR_REPOSITORY }}/pormel-api/${{ github.sha }} .
+          docker push ${{ secrets.AWS_ECR_REPOSITORY }}/pormel-api/${{ github.sha }}
