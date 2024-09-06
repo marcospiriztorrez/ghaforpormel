@@ -37,7 +37,7 @@ jobs:
 
       - name: Tag Docker image
         run: |
-          docker tag pormel/satelites:latest 650251712908.dkr.ecr.us-east-2.amazonaws.com/pormel/satelites:latest
+          docker tag pormel/satelites:${{ github.sha }} 650251712908.dkr.ecr.us-east-2.amazonaws.com/pormel/satelites:${{ github.sha }}
         
       - name: Push Docker image
         run: |
