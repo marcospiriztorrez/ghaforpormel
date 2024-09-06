@@ -33,7 +33,7 @@ jobs:
           
       - name: Build Docker image
         run: |
-          docker build -t pormel/satelites:${{ github.sha }} .
+          docker build -t pormel/satelites .
 
       - name: Tag Docker image
         run: |
