@@ -33,12 +33,8 @@ jobs:
           
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.AWS_ECR_REPOSITORY }}/${{ github.sha }} .
-
-      - name: Tag Docker image
-        run: |
-          docker tag ${{ secrets.AWS_ECR_REPOSITORY }}/${{ github.sha }} ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
-
+          docker build -t ${{ secrets.AWS_ECR_REPOSITORY }}/pormel-api/${{ github.sha }} .
+        
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.AWS_ECR_REPOSITORY }}:latest
+          docker push ${{ secrets.AWS_ECR_REPOSITORY }}/pormel-api/${{ github.sha }} .
