@@ -33,7 +33,7 @@ jobs:
           
       - name: Build Docker image
         run: |
-          docker build -t pormel/satelites .
+          docker build -t pormel/satelites:${{ github.sha }} .
 
       - name: Tag Docker image
         run: |
@@ -41,4 +41,4 @@ jobs:
         
       - name: Push Docker image
         run: |
-          docker push 650251712908.dkr.ecr.us-east-2.amazonaws.com/pormel/satelites:latest
+          docker push 650251712908.dkr.ecr.us-east-2.amazonaws.com/pormel/satelites:${{ github.sha }}
