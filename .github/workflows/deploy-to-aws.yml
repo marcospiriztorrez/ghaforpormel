@@ -42,3 +42,10 @@ jobs:
       - name: Push Docker image
         run: |
           docker push 650251712908.dkr.ecr.us-east-2.amazonaws.com/pormel/satelites:${{ github.sha }}
+      
+      - name: Update ECS service with new image
+        run: |
+          aws ecs update-service \
+            --cluster pormel \
+            --service svc-pormel \
+            --force-new-deployment
