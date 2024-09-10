@@ -47,5 +47,5 @@ jobs:
         run: |
           aws ecs update-service \
             --cluster pormel \
-            --service service-pormel \
+            --service pooo \
             --force-new-deployment
